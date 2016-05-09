@@ -8,42 +8,13 @@ android {
     minSdkVersion 14
     targetSdkVersion 23
 
-    def versionPropsFile = file('version.properties')
-    def versionMajor, versionMinor, versionPatch, versionBuild, versionNumber
-    if (versionPropsFile.canRead()) {
-      def Properties versionProps = new Properties()
-      versionProps.load(new FileInputStream(versionPropsFile))
+    def versionNumber = 0
+    def versionMajor = 0
+    def versionMinor = 1
+    def versionPatch = 0
 
-      def value = 0
-      def runTasks = gradle.startParameter.taskNames
-      if ('assemble' in runTasks || 'assembleRelease' in runTasks || 'aR' in runTasks) {
-        value = 1;
-      }
-      versionMajor = versionProps['VERSION_MAJOR']
-      versionMinor = versionProps['VERSION_MINOR'].toInteger()
-      versionPatch = versionProps['VERSION_PATCH'].toInteger() + value
-      versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-      versionNumber = versionProps['VERSION_NUMBER'].toInteger() + value
-      if (versionBuild > 99) {
-        versionPatch++
-        versionBuild = versionBuild - 99
-      }
-      if (versionPatch > 9) {
-        versionMinor++
-        versionPatch = versionPatch - 9
-      }
-
-      versionProps['VERSION_MINOR'] = versionMinor.toString()
-      versionProps['VERSION_PATCH'] = versionPatch.toString()
-      versionProps['VERSION_BUILD'] = versionBuild.toString()
-      versionProps['VERSION_NUMBER'] = versionNumber.toString()
-      versionProps.store(versionPropsFile.newWriter(), null)
-    } else {
-      throw new GradleException("Could not read version.properties!")
-    }
-    //noinspection GroovyAssignabilityCheck
     versionCode versionNumber
-    versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}8"
+    versionName "${versionMajor}.${versionMinor}.${versionPatch}"
   }
   buildTypes {
     release {
