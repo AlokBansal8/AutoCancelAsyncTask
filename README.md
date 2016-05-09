@@ -1,4 +1,5 @@
-[![GitHub license](https://img.shields.io/github/license/dcendents/android-maven-gradle-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![GitHub license](https://img.shields.io/github/license/dcendents/android-maven-gradle-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0.html) 
+[![Download](https://api.bintray.com/packages/alokbansal8/maven/AutoCancelAsyncTask/images/download.svg)](https://bintray.com/alokbansal8/maven/AutoCancelAsyncTask/_latestVersion)
 
 # AutoCancelAsyncTask
 This library allow you to use Android's [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html) such that it gets cancelled at [onStop](http://developer.android.com/reference/android/app/Activity.html#onStop()) event of Activity's [lifecycle](http://developer.android.com/guide/components/activities.html#Lifecycle).
