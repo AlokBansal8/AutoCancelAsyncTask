@@ -15,19 +15,25 @@ apply plugin: 'com.jfrog.bintray'
 
 def versionNumber = 0
 def versionMajor = 0
-def versionMinor = 1
+def versionMinor = 2
 def versionPatch = 0
+def vName = "${versionMajor}.${versionMinor}.${versionPatch}"
 
 android {
-  compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  compileOptions {
+    sourceCompatibility rootProject.ext.sourceCompatibility
+    targetCompatibility rootProject.ext.sourceCompatibility
+  }
 
   defaultConfig {
-    minSdkVersion 14
-    targetSdkVersion 23
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
 
     versionCode versionNumber
-    versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+    versionName vName
   }
   buildTypes {
     release {
@@ -40,7 +46,6 @@ android {
 dependencies {
   def support_library_version = "23.3.0"
 
-  compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
 
   compile "com.android.support:support-annotations:${support_library_version}"
@@ -60,8 +65,6 @@ ext {
   siteUrl = 'https://github.com/AlokBansal8/AutoCancelAsyncTask'
   gitUrl = 'https://github.com/AlokBansal8/AutoCancelAsyncTask.git'
 
-  libraryVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
-
   developerId = 'alokbansal8'
   developerName = 'Alok Bansal'
   developerEmail = 'alokagrawal8@gmail.com'
@@ -71,5 +74,91 @@ ext {
   allLicenses = ["Apache-2.0"]
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+group = publishedGroupId
+
+install {
+  repositories.mavenInstaller.pom.project {
+    packaging 'aar'
+    groupId publishedGroupId
+    artifactId artifact
+
+    name libraryName
+    description libraryDescription
+    url siteUrl
+
+    licenses {
+      license {
+        name licenseName
+        url licenseUrl
+      }
+    }
+
+    scm {
+      connection gitUrl
+      developerConnection gitUrl
+      url siteUrl
+    }
+
+    developers {
+      developer {
+        id developerId
+        name developerName
+        email developerEmail
+      }
+    }
+  }
+}
+
+version = vName
+
+if (project.hasProperty("android")) {
+  task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+  }
+
+  task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+  }
+} else { // Java libraries
+  task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+  }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+artifacts {
+  archives javadocJar
+  archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+  user = properties.getProperty("bintray.user")
+  key = properties.getProperty("bintray.apikey")
+
+  configurations = ['archives']
+
+  publish = true
+
+  pkg {
+    repo = bintrayRepo
+    name = bintrayName
+    desc = libraryDescription
+    websiteUrl = siteUrl
+    vcsUrl = gitUrl
+    licenses = allLicenses
+
+    version {
+      desc = libraryDescription
+    }
+  }
+}
