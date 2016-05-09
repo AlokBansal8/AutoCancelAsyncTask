@@ -4,7 +4,7 @@ This library allow you to use Android's [AsyncTask](http://developer.android.com
 ## Usage
 ### Gradle
 Add the following line to your build.gradle file.
-``` groovy
+```groovy
 compile 'com.github.alokbansal8.autocancelasynctask:lib:0.1.0'
 ```
 
@@ -13,7 +13,7 @@ Extend the Activity, whose lifecycle you would like to link to AsyncTask, from [
 
 ### Show me the Code
 Example code:
-``` java
+```java
 public class SampleActivity extends AutoCancelTaskActivity {
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
