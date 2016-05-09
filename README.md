@@ -1,10 +1,13 @@
+[![GitHub license](https://img.shields.io/github/license/dcendents/android-maven-gradle-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0.html) 
+[![Download](https://api.bintray.com/packages/alokbansal8/maven/AutoCancelAsyncTask/images/download.svg)](https://bintray.com/alokbansal8/maven/AutoCancelAsyncTask/_latestVersion)
+
 # AutoCancelAsyncTask
 This library allow you to use Android's [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html) such that it gets cancelled at [onStop](http://developer.android.com/reference/android/app/Activity.html#onStop()) event of Activity's [lifecycle](http://developer.android.com/guide/components/activities.html#Lifecycle).
 
 ## Usage
 ### Gradle
 Add the following line to your build.gradle file.
-``` groovy
+```groovy
 compile 'com.github.alokbansal8.autocancelasynctask:lib:0.1.0'
 ```
 
@@ -13,7 +16,7 @@ Extend the Activity, whose lifecycle you would like to link to AsyncTask, from [
 
 ### Show me the Code
 Example code:
-``` java
+```java
 public class SampleActivity extends AutoCancelTaskActivity {
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
