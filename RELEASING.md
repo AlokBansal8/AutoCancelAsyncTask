@@ -7,8 +7,7 @@ Release Process
  4.  Commit: `git commit -am "Prepare version X.Y.X"`
  6.  Tag: `git tag -a X.Y.Z -m "Version X.Y.Z"`
  7.  Update `VERSION_NAME` in `gradle.properties` to the next development version. For example, if
-     you just tagged version 1.0.4 you would set this value to 1.0.5. Do NOT append "-SNAPSHOT" to
-     this value, it will be added automatically.
+     you just tagged version 1.0.4 you would set this value to 1.0.5.
  8.  Commit: `git commit -am "Prepare next development version."`
  9.  Push: `git push && git push --tags`
  10. Paste the `CHANGELOG.md` contents for this version into a Release on GitHub along with the
