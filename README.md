@@ -9,7 +9,7 @@ This library allow you to use Android's [AsyncTask](http://developer.android.com
 ### Gradle
 Add the following line to your build.gradle file.
 ```groovy
-compile 'com.github.alokbansal8.autocancelasynctask:lib:0.1.0'
+compile 'com.github.alokbansal8.autocancelasynctask:lib:0.2.0'
 ```
 
 ### Description
